@@ -1,9 +1,11 @@
 package edu.neu.coe.info6205.threesum;
 
 import edu.neu.coe.info6205.util.Benchmark_Timer;
+import edu.neu.coe.info6205.util.Stopwatch;
 import edu.neu.coe.info6205.util.TimeLogger;
 import edu.neu.coe.info6205.util.Utilities;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -34,8 +36,26 @@ public class ThreeSumBenchmark {
 
     private void benchmarkThreeSum(final String description, final Consumer<int[]> function, int n, final TimeLogger[] timeLoggers) {
         if (description.equals("ThreeSumCubic") && n > 4000) return;
-        // FIXME
-        // END 
+        Stopwatch timer = new Stopwatch();
+        for(int i=1; i<=runs; i++) {
+            function.accept(supplier.get());
+        }
+        double avgTimeLapsed = (double) (timer.lap() / runs);
+
+        if (description.equals("ThreeSumCubic")) {
+            Arrays.stream(ThreeSumBenchmark.timeLoggersCubic).forEach(logger -> {
+                logger.log(avgTimeLapsed, n);
+            });
+        } else if (description.equals("ThreeSumQuadrithmic")) {
+            Arrays.stream(ThreeSumBenchmark.timeLoggersQuadrithmic).forEach(logger -> {
+                logger.log(avgTimeLapsed, n);
+            });
+        } else if (description.equals("ThreeSumQuadratic")) {
+            Arrays.stream(ThreeSumBenchmark.timeLoggersQuadratic).forEach(logger -> {
+                logger.log(avgTimeLapsed, n);
+            });
+        }
+        timer.close();
     }
 
     private final static TimeLogger[] timeLoggersCubic = {
