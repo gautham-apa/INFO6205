@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.neu.coe.info6205.sort.InstrumentedHelper.INVERSIONS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -41,7 +42,7 @@ public class InsertionSortTest {
         sorter.postProcess(ys);
         final int compares = (int) statPack.getStatistics(InstrumentedHelper.COMPARES).mean();
         assertEquals(list.size() - 1, compares);
-        final int inversions = (int) statPack.getStatistics(InstrumentedHelper.INVERSIONS).mean();
+        final int inversions = (int) statPack.getStatistics(INVERSIONS).mean();
         assertEquals(0L, inversions);
         final int fixes = (int) statPack.getStatistics(InstrumentedHelper.FIXES).mean();
         assertEquals(inversions, fixes);
@@ -107,7 +108,7 @@ public class InsertionSortTest {
         // Since we set a specific seed, this should always succeed.
         // If we use true random seed and this test fails, just increase the delta a little.
         assertEquals(1.0, 4.0 * compares / n / (n - 1), 0.12);
-        final int inversions = (int) statPack.getStatistics(InstrumentedHelper.INVERSIONS).mean();
+        final int inversions = (int) statPack.getStatistics(INVERSIONS).mean();
         final int fixes = (int) statPack.getStatistics(InstrumentedHelper.FIXES).mean();
         System.out.println(statPack);
         assertEquals(inversions, fixes);
@@ -133,7 +134,7 @@ public class InsertionSortTest {
         // Since we set a specific seed, this should always succeed.
         // If we use true random seed and this test fails, just increase the delta a little.
         assertEquals(4950, compares);
-        final int inversions = (int) statPack.getStatistics(InstrumentedHelper.INVERSIONS).mean();
+        final int inversions = (int) statPack.getStatistics(INVERSIONS).mean();
         final int fixes = (int) statPack.getStatistics(InstrumentedHelper.FIXES).mean();
         System.out.println(statPack);
         assertEquals(inversions, fixes);
